@@ -110,3 +110,15 @@ fetch(`https://api.openweathermap.org/data/2.5/weather?q=Aix-en-Provence&units=m
     .then(data => console.log(data))
     .catch(error => console.error(error));
     
+    function envoyerMessage() {
+        // Récupérer la valeur de la zone de texte
+        var message = document.getElementById("message").value;
+        
+        // Rediriger vers la page 2 en passant la valeur du message en paramètre de l'URL
+        window.location.href = "index.html?message=" + encodeURIComponent(message);
+    }
+
+    var message = decodeURIComponent(window.location.search.replace("?message=", ""));
+		
+    // Afficher le message dans la balise "div"
+    document.getElementById("message").innerHTML = message;
