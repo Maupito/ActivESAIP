@@ -1,3 +1,8 @@
+
+
+/* Diaporama */
+
+
 // Variables globales
 let compteur = 0 // Compteur qui permettra de savoir sur quelle slide nous sommes
 let timer, elements, slides, slideWidth
@@ -72,53 +77,34 @@ function startTimer() {
     timer = setInterval(slideNext, 3500)
 }
 
-// Récupération des données météo depuis l'API OpenWeatherMap
-const apiKey = '1e348b815215aac837e817503347beed'
-const city = 'Aix-en-Provence'
 
-fetch(`https://api.openweathermap.org/data/2.5/weather?q=Aix-en-Provence&units=metric&appid=1e348b815215aac837e817503347beed&lang=fr`)
-    .then(response => response.json())
-    .then(data => {
-        // Récupération des informations météo
-        const temp = data.main.temp.toFixed(1) + '°C'
-        const desc = data.weather[0].description
+/* Password */
 
-        // Affichage des informations météo dans le widget
-        document.querySelector('#weather-temp').textContent = temp
-        document.querySelector('#weather-desc').textContent = desc
-    })
-    .catch(error => console.log(error))
 
-    //Requete API SAINT ELOI
-    const url = 'https://steloi.ogia.fr/ogia_ateliers_api.php';
+    function checkPassword() {
+        var password = document.getElementById("password").value;
+        if (password === "SaintELOI") {
+            window.location.href = "back.html";
+        } else {
+            alert("Mot de passe incorrect. Veuillez réessayer.");
+        }
+    }
 
-    const data = {
-      "API_KEY": "5656FD9CF72B47AFBCCE4917CDDF196B",
-      "JOUR": "L"
-    };
-    
-    const headers = {
-      'Content-Type': 'application/json'
-    };
-    
-    fetch(url, {
-      method: 'POST',
-      headers: headers,
-      body: JSON.stringify(data)
-    })
-    .then(response => response.json())
-    .then(data => console.log(data))
-    .catch(error => console.error(error));
-    
+
+/*Message index.html*/
+
+
     function envoyerMessage() {
         // Récupérer la valeur de la zone de texte
         var message = document.getElementById("message").value;
+        console.log("Message à envoyer : " + message);
         
         // Rediriger vers index.html en passant la valeur du message en paramètre de l'URL
         window.location.href = "index.html?message=" + encodeURIComponent(message);
     }
 
-    var message = decodeURIComponent(window.location.search.replace("?message=", ""));
-		
-    // Afficher le message dans la balise "div"
-    document.getElementById("message").innerHTML = message;
+    document.addEventListener("DOMContentLoaded", function(event) {
+        var message = decodeURIComponent(window.location.search.replace("?message=", ""));
+        console.log("Message reçu : " + message);
+        document.getElementById("message").innerHTML = message;
+      });
