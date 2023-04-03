@@ -77,6 +77,23 @@ function startTimer() {
     timer = setInterval(slideNext, 3500)
 }
 
+// Récupération des données météo depuis l'API OpenWeatherMap
+const apiKey = '1e348b815215aac837e817503347beed'
+const city = 'Aix-en-Provence'
+
+fetch(`https://api.openweathermap.org/data/2.5/weather?q=Aix-en-Provence&units=metric&appid=1e348b815215aac837e817503347beed&lang=fr`)
+    .then(response => response.json())
+    .then(data => {
+        // Récupération des informations météo
+        const temp = data.main.temp.toFixed(1) + '°C'
+        const desc = data.weather[0].description
+
+        // Affichage des informations météo dans le widget
+        document.querySelector('#weather-temp').textContent = temp
+        document.querySelector('#weather-desc').textContent = desc
+    })
+    .catch(error => console.log(error))
+
 
 /* Password */
 
