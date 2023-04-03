@@ -95,19 +95,27 @@ fetch(`https://api.openweathermap.org/data/2.5/weather?q=Aix-en-Provence&units=m
     .catch(error => console.log(error))
 
 
-/* Password */
+/*Requête API météo */ 
 
 
-    function checkPassword() {
-        var password = document.getElementById("password").value;
-        if (password === "SaintELOI") {
-            window.location.href = "back.html";
-        } else {
-            alert("Mot de passe incorrect. Veuillez réessayer.");
-        }
-    }
+// Récupération des données météo depuis l'API OpenWeatherMap
+const apiKey = '1e348b815215aac837e817503347beed'
+const city = 'Aix-en-Provence'
 
+fetch(`https://api.openweathermap.org/data/2.5/weather?q=Aix-en-Provence&units=metric&appid=1e348b815215aac837e817503347beed&lang=fr`)
+    .then(response => response.json())
+    .then(data => {
+        // Récupération des informations météo
+        const temp = data.main.temp.toFixed(1) + '°C'
+        const desc = data.weather[0].description
 
+        // Affichage des informations météo dans le widget
+        document.querySelector('#weather-temp').textContent = temp
+        document.querySelector('#weather-desc').textContent = desc
+    })
+    .catch(error => console.log(error))
+
+    
 /*Message index.html*/
 
 
@@ -125,3 +133,31 @@ fetch(`https://api.openweathermap.org/data/2.5/weather?q=Aix-en-Provence&units=m
         console.log("Message reçu : " + message);
         document.getElementById("message").innerHTML = message;
       });
+
+      var myHeaders = new Headers();
+myHeaders.append("Content-Type", "application/json");
+
+var data = JSON.stringify({
+"API_KEY": "5656FD9CF72B47AFBCCE4917CDDF196B",
+"JOUR": "L",
+"FORCE_P": 3
+});
+
+var requestOptions = {
+method: 'POST',
+headers: myHeaders,
+body: data,
+redirect: 'follow'
+};
+
+fetch("https://steloi.ogia.fr/ogia_ateliers_api.php", requestOptions)
+.then(response => response.text())
+.then(result => results(result))
+.catch(error => console.log('error', error));
+
+function results(data)
+{
+var reponse=JSON.parse(data);
+console.log("Objet reponse :");
+console.log(reponse);
+}
